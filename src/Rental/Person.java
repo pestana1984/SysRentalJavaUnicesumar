@@ -5,6 +5,7 @@ abstract class Person{
     private String name;
     private String cpf;
 
+
     public Person(String cpf, String name) {
         this.cpf = cpf;
         this.name = name;

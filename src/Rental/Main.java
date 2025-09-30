@@ -211,6 +211,50 @@ public class Main {
         return null;
     }
 
+    static boolean searchRentalByCostumer(ArrayList<Rental> rentals, Costumer costumers){
+        if(rentals.isEmpty()){
+            System.out.println("Lista vazia");
+        }
+        else {
+            for (int i = 0; i <= rentals.size()-1; i++){
+                if(rentals.get(i).getCostumer().equals(costumers)){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    static boolean searchRentalByVehicle(ArrayList<Rental> rentals, Vehicle vehicle){
+        if(rentals.isEmpty()){
+            System.out.println("Lista vazia");
+        }
+        else{
+            for (int i = 0; i <= rentals.size()-1; i++){
+                if(rentals.get(i).getVehicle().equals(vehicle)){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    static ArrayList<Costumer> removeCostumer(ArrayList<Costumer> costumers){
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Informe o CPF do cliente: ");
+        String cpf = sc.nextLine();
+
+        for (int i = 0; i <= costumers.size()-1; i++){
+            if(costumers.get(i).getCpf().equals(cpf)){
+                costumers.remove(i);
+                return costumers;
+            }
+        }
+        System.out.println("Cliente não encontrado no cadastro.");
+
+        return costumers;
+    }
+
     public static void main(String[] args) {
 
         var costumers = new ArrayList<Costumer>();
@@ -264,11 +308,24 @@ public class Main {
                             break;
                         case 3:
                             //Remover Cliente
+                            //costumers = removeCostumer(costumers);
+                            //costumers.remove(searchCostumer(costumers));
+                            var costumer = searchCostumer(costumers);
+                            if(costumer == null){
+                                System.out.println("Cliente não encontrado!");
+                            }
+                            else {
+                                if (searchRentalByCostumer(rentals, costumer)) {
+                                    System.out.println("Cliente não pode ser removido pois consta na lista de aluguel.");
+                                } else {
+                                    costumers.remove(costumer);
+                                }
+                            }
                             break;
                         case 0:
                             break;
                         default:
-                            System.out.println("Opção Inexiste.");
+                            System.out.println("Opção Inexistente.");
                     }
                     break;
                 case 2:
@@ -281,11 +338,24 @@ public class Main {
                             break;
                         case 3:
                             //Remover Veiculo
+                            //vehicles.remove(searchVehicle(vehicles));
+                            var vehicle = searchVehicle(vehicles);
+                            if(vehicle == null){
+                                System.out.println("Veículo não encontrado.");
+                            }
+                            else{
+                                if (searchRentalByVehicle(rentals, vehicle)) {
+                                    System.out.println("Veiculo não pode ser removido pois consta na lista de aluguel.");
+                                }
+                                else{
+                                    vehicles.remove(vehicle);
+                                }
+                            }
                             break;
                         case 0:
                             break;
                         default:
-                            System.out.println("Opção Inexiste.");
+                            System.out.println("Opção Inexistente.");
                     }
                     break;
                 case 3:
@@ -302,7 +372,7 @@ public class Main {
                         case 0:
                             break;
                         default:
-                            System.out.println("Opção Inexiste.");
+                            System.out.println("Opção Inexistente.");
                     }
                     break;
                 case 4:
